@@ -1,0 +1,28 @@
+<Window x:Class="Sapphire.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Sapphire"
+        mc:Ignorable="d"
+        Height="200" Width="500" Background="#212121" AllowsTransparency="True"
+        WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="MessageBoxWindow_OnLoaded">
+    <Window.Resources>
+        <Style x:Key="WindowStateButtons" TargetType="Button">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="0, 0, 5, 0"/>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid MouseDown="Drag_OnMouseDown">
+        <Button Style="{StaticResource WindowStateButtons}"
+                Content="✕" Click="CloseApplication_OnClick"></Button>
+        <Label x:Name="Label" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White"></Label>
+    </Grid>
+</Window>

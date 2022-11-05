@@ -3,10 +3,143 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sapphire"
+        xmlns:sapphire="clr-namespace:Sapphire"
+        xmlns:viewModel="clr-namespace:Sapphire.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Height="630" Width="900" 
+        Background="Transparent" AllowsTransparency="True" 
+        WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="WindowStateButtons" TargetType="Button">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="0, 0, 5, 0"/>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="HelpButtons" TargetType="Button">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="Margin" Value="0, 0, 0, 5"/>
+        </Style>
+    </Window.Resources>
+    <Grid MouseDown="Drag_OnMouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Row="0" Grid.Column="0"
+              Background="#2A2A2A">
+            
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1"
+              Background="#2A2A2A">
+            
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="2"
+              Background="#2A2A2A">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" 
+                        VerticalAlignment="Center" HorizontalAlignment="Right">
+                <Button Style="{StaticResource WindowStateButtons}"
+                        Content="-" Click="Minimize_OnClick"></Button>
+                <Button Style="{StaticResource WindowStateButtons}"
+                        Content="☐" Click="ChangeState_OnClick"></Button>
+                <Button Style="{StaticResource WindowStateButtons}"
+                        Content="✕" Click="CloseApplication_OnClick"></Button>
+            </StackPanel>
+        </Grid>
+          
+        <Border Grid.Row="1" Grid.Column="0"
+                Background="#212121" BorderBrush="#363636" 
+                BorderThickness="0, 0, 1, 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="90"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                    <Button Style="{StaticResource HelpButtons}">
+                        <Image Source="Icons/settings_icon.png" Width="25" Height="25"></Image>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="1" Background="#212121" BorderBrush="#363636" BorderThickness="0, 0, 1, 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <Label Content="Notes" Foreground="Gray" VerticalAlignment="Bottom" FontSize="16"></Label>
+                    <Button Width="30" Height="30" 
+                            Background="Transparent" BorderThickness="0" 
+                            Content="+" Foreground="Gray" FontSize="18"
+                            VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                            Click="AddNewNote_OnClick"></Button>
+                    <Separator VerticalAlignment="Bottom" Background="#363636" Margin="0, 10, 0, 0">
+                        <Separator.RenderTransform>
+                            <ScaleTransform ScaleY="0.8"></ScaleTransform>
+                        </Separator.RenderTransform>
+                    </Separator>
+                </Grid>
+            
+                <ListView x:Name="ListView" Grid.Row="1"  ItemsSource="{Binding NoteModels}"
+                          Background="Transparent" BorderThickness="0"
+                          ItemContainerStyle="{StaticResource NoteCard}" 
+                          SelectionChanged="ListView_OnSelected"
+                          KeyDown="ListView_OnKeyDown">
+                </ListView>
+            </Grid>
+        </Border>
+        
+        <Grid Grid.Row="1" Grid.Column="2"
+              Background="#1E1E1E">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" x:Name="TitleLabel" Foreground="White" FontSize="16" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            
+            <TextBox Grid.Row="0" x:Name="TitleBox" Foreground="White" FontSize="16" 
+                     VerticalAlignment="Center" HorizontalAlignment="Center" 
+                     Visibility="Hidden"
+                     Width="400" Background="Transparent" BorderBrush="Gray" KeyDown="TitleBox_OnKeyDown"
+                     LostFocus="TitleBox_OnLostFocus" GotFocus="TitleBox_OnGotFocus" CaretBrush="White"></TextBox>
+            
+            <Grid Grid.Row="1">
+                <TextBox x:Name="TextBox" Background="Transparent" Foreground="White"
+                         BorderThickness="0" FontSize="14" VerticalAlignment="Center"
+                         Width="560" Height="520" AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto" TextChanged="SaveNote_OnTextChanged" CaretBrush="White"></TextBox>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

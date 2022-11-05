@@ -7,4 +7,30 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="MVVM\View" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Icons\settings_icon.png" />
+      <Content Include="Icons\settings_icon.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Icons\help_icon.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Icons\help_icon.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Icons\help_icon.png" />
+      <Content Include="Icons\help_icon.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10" />
+      <PackageReference Include="System.Data.DB2.EntityFramework.Migrations" Version="6.0.0" />
+    </ItemGroup>
+
 </Project>
